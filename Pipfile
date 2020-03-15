@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "==2.21.0"
+numpy = "==1.16.0"
+Flask = "==1.0.2"
+
+[dev-packages]
+isort = "*"
+black = "==19.10b0"
+
+[requires]
+python_version = "3.8"
