@@ -6,6 +6,7 @@ import click
 from tqdm import tqdm
 
 from utils.logger import set_up_logger
+from utils.validation import validate_url
 
 logger = logging.getLogger(__name__)
 
@@ -21,10 +22,8 @@ def main(urls: List[str], number: int, debug: bool):
 
     start = time.monotonic()
     for url in tqdm(urls, desc="urls"):
-        logger.info(f"start test of url {url}")
-        for _ in tqdm(range(number), desc="test"):
-            pass
-        logger.info(f"finished test of {url}")
+        results = validate_url(url, number)
+        # TODO: save results to csv
 
     logger.info(f"test was finished at time {time.monotonic()-start:.3f}")
 
