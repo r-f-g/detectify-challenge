@@ -24,6 +24,6 @@ def get_requests_times(url: str, number: int, params: Optional[Dict[str, Any]] =
     """validate url"""
     start = time.monotonic()
     logger.info(f"start test of url {url} with params {params}")
-    results = [get_request_time(url) for _ in tqdm(range(number), desc="validation", leave=False)]
+    results = [get_request_time(url, params=params) for _ in tqdm(range(number), desc="validation", leave=False)]
     logger.info(f"finished test of {url, params} at time {time.monotonic() - start:.3f}")
     return results
