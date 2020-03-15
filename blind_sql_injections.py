@@ -7,8 +7,8 @@ import click
 from tqdm import tqdm
 
 from utils.logger import set_up_logger
-from utils.save import save_results
 from utils.requests import get_requests_times
+from utils.save import save_results
 
 logger = logging.getLogger(__name__)
 

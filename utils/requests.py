@@ -1,37 +1,29 @@
 import logging
 import time
-from typing import List
+from typing import Any, Dict, List, Optional
 
 import requests
-from requests import ConnectionError
 from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 
 
-def get_request_time(url: str) -> float:
+def get_request_time(url: str, params: Optional[Dict[str, Any]] = None) -> Optional[float]:
     """timeit GET request"""
     start = time.monotonic()
-    response = requests.get(url)
+    response = requests.get(url, params=params)
 
     if 200 <= response.status_code < 300:
         return time.monotonic() - start
     else:
         logger.error(f"response return code {response.status_code} with text {response.text}")
-        return -1.0
+        return None
 
 
-def get_requests_times(url: str, number: int) -> List[float]:
+def get_requests_times(url: str, number: int, params: Optional[Dict[str, Any]] = None) -> List[Optional[float]]:
     """validate url"""
-    results = []
     start = time.monotonic()
-
-    logger.info(f"start test of url {url}")
-    try:
-        results = [get_request_time(url) for _ in tqdm(range(number), desc="validation", leave=False)]
-        logger.info(f"finished test of {url} at time {time.monotonic() - start:.3f}")
-    except ConnectionError as error:
-        logger.exception(error)
-        logger.error(f"the page {url} is inaccessible")
-
+    logger.info(f"start test of url {url} with params {params}")
+    results = [get_request_time(url) for _ in tqdm(range(number), desc="validation", leave=False)]
+    logger.info(f"finished test of {url, params} at time {time.monotonic() - start:.3f}")
     return results
