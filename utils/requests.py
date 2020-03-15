@@ -9,7 +9,7 @@ from tqdm import tqdm
 logger = logging.getLogger(__name__)
 
 
-def get_request(url: str) -> float:
+def get_request_time(url: str) -> float:
     """timeit GET request"""
     start = time.monotonic()
     response = requests.get(url)
@@ -21,14 +21,14 @@ def get_request(url: str) -> float:
         return -1.0
 
 
-def validate_url(url: str, number: int) -> List[float]:
+def get_requests_times(url: str, number: int) -> List[float]:
     """validate url"""
     results = []
     start = time.monotonic()
 
     logger.info(f"start test of url {url}")
     try:
-        results = [get_request(url) for _ in tqdm(range(number), desc="test", leave=False)]
+        results = [get_request_time(url) for _ in tqdm(range(number), desc="validation", leave=False)]
         logger.info(f"finished test of {url} at time {time.monotonic() - start:.3f}")
     except ConnectionError as error:
         logger.exception(error)

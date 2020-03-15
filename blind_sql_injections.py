@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 from utils.logger import set_up_logger
 from utils.save import save_results
-from utils.validation import validate_url
+from utils.requests import get_requests_times
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ def main(urls: List[str], number: int, debug: bool):
 
     start = time.monotonic()
     for url in tqdm(urls, desc="urls"):
-        test_results[url] = validate_url(url, number)
+        test_results[url] = get_requests_times(url, number)
 
     save_results(results_file, test_results)
 

@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from requests import ConnectionError
 
-from utils.validation import get_request, validate_url
+from utils.requests import get_request_time, get_requests_times
 
 
 def fake_get(url: str):
@@ -23,17 +23,17 @@ def fake_get(url: str):
 
 @patch("requests.get", fake_get)
 @pytest.mark.parametrize("url, exp_lt_time", [("error", -1.0), ("ok_url", 1),])
-def test_get_request(url, exp_lt_time):
+def test_get_request_time(url, exp_lt_time):
     """test get request time method"""
-    assert get_request(url) <= exp_lt_time
+    assert get_request_time(url) <= exp_lt_time
 
 
 @patch("requests.get", fake_get)
 @pytest.mark.parametrize(
     "url, number, exp_lt_time, exp_size", [("raise", 10, 0, 0), ("error", 10, -1, 10), ("any_other_url", 10, 1, 10)]
 )
-def test_validate_url(url, number, exp_lt_time, exp_size):
+def test_get_requests_times(url, number, exp_lt_time, exp_size):
     """test url validation"""
-    results = validate_url(url, number)
+    results = get_requests_times(url, number)
     assert len(results) == exp_size
     assert sum(results) <= number * exp_lt_time
