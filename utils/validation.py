@@ -15,7 +15,7 @@ def get_request(url: str) -> float:
     response = requests.get(url)
 
     if 200 <= response.status_code < 300:
-        return time.monotonic()-start
+        return time.monotonic() - start
     else:
         logger.error(f"response return code {response.status_code} with text {response.text}")
         return -1.0
@@ -28,7 +28,7 @@ def validate_url(url: str, number: int) -> List[float]:
 
     logger.info(f"start test of url {url}")
     try:
-        results = [get_request(url) for _ in tqdm(range(number), desc="test")]
+        results = [get_request(url) for _ in tqdm(range(number), desc="test", leave=False)]
         logger.info(f"finished test of {url} at time {time.monotonic() - start:.3f}")
     except ConnectionError as error:
         logger.exception(error)
