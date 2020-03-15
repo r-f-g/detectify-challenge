@@ -7,7 +7,8 @@ logger = logging.getLogger(__name__)
 
 def create_line(array: Iterable, sep: str) -> str:
     """create row of results file"""
-    return f"{sep.join([str(item) for item in array])}{os.linesep}"
+    safe_array = [str(item) if item is not None else "" for item in array]
+    return f"{sep.join(safe_array)}{os.linesep}"
 
 
 def get_from_list(array: List, index: int) -> Any:
