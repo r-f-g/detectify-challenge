@@ -8,11 +8,13 @@ requests = "==2.21.0"
 numpy = "==1.16.0"
 Flask = "==1.0.2"
 tqdm = "*"
+scipy = "*"
 
 [dev-packages]
 isort = "*"
 black = "==19.10b0"
 pytest = "*"
+jupyterlab = "*"
 
 [requires]
 python_version = "3.8"
