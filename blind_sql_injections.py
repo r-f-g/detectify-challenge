@@ -7,6 +7,7 @@ import click
 from tqdm import tqdm
 
 from utils.logger import set_up_logger
+from utils.save import save_results
 from vulnerability.sql_injections import url_vulnerability
 
 logger = logging.getLogger(__name__)
@@ -29,11 +30,12 @@ def main(urls: List[str], key: str, value: str, number: int, sleep: int, debug: 
     start = time.monotonic()
     for url in tqdm(urls, desc="urls"):
         vulnerable, save_times, inject_times = url_vulnerability(url, number, key, value, sleep)
-        logger.info(f"url is vulnerable {vulnerable}")
 
         # save times
-        test_results[f"[SAFE]{url}"] = save_times
-        test_results[f"[INJECT]{url}"] = inject_times
+        test_results[f"[SAFE]{url}[vulnerable=={vulnerable}]"] = save_times
+        test_results[f"[INJECT]{url}[vulnerable=={vulnerable}]"] = inject_times
+
+    save_results(results_file, test_results)
 
     logger.info(f"test was finished at time {time.monotonic()-start:.3f}")
 
