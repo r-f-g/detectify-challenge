@@ -1,11 +1,13 @@
 import logging
 import time
+from datetime import datetime
 from typing import List
 
 import click
 from tqdm import tqdm
 
 from utils.logger import set_up_logger
+from utils.save import save_results
 from utils.validation import validate_url
 
 logger = logging.getLogger(__name__)
@@ -20,10 +22,13 @@ def main(urls: List[str], number: int, debug: bool):
     set_up_logger("SQL_injections", debug)
     logger.info(f"SQL injection vulnerability test [{number:d}x] for urls {urls}.")
 
+    test_results, results_file = {}, f"SQL_injections__{datetime.now():%Y%m%d-%H%M}.csv"
+
     start = time.monotonic()
     for url in tqdm(urls, desc="urls"):
-        results = validate_url(url, number)
-        # TODO: save results to csv
+        test_results[url] = validate_url(url, number)
+
+    save_results(results_file, test_results)
 
     logger.info(f"test was finished at time {time.monotonic()-start:.3f}")
 
