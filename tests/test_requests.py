@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import numpy as np
 import pytest
+from requests import ConnectionError
 
 from utils.requests import get_request_time, get_requests_times
 
@@ -14,7 +15,7 @@ def fake_get(url: str, **kwargs):
         text: str
 
     if url == "error":
-        return FakeResponse(status_code=500, text="server error")
+        raise ConnectionError("test exception")
 
     return FakeResponse(status_code=200, text="OK")
 

@@ -19,8 +19,9 @@ logger = logging.getLogger(__name__)
 @click.option("--value", "-v", type=click.STRING, default="1", help="value of argument")
 @click.option("--number", "-n", default=100, type=click.INT, help="number of requests")
 @click.option("--sleep", "-s", default=3, type=click.INT, help="sleep injection time")
+@click.option("--min_p_value", "-p", default=5 * 10e5, type=click.FLOAT, help="sleep injection time")
 @click.option("--debug", is_flag=True, default=False, help="logging debug mode")
-def main(urls: List[str], key: str, value: str, number: int, sleep: int, debug: bool):
+def main(urls: List[str], key: str, value: str, number: int, sleep: int, min_p_value: float, debug: bool):
     """run SQL injection vulnerability test"""
     set_up_logger("SQL_injections", debug)
     logger.info(f"SQL injection vulnerability test [{number:d}x] for urls {urls}.")
@@ -29,7 +30,7 @@ def main(urls: List[str], key: str, value: str, number: int, sleep: int, debug: 
 
     start = time.monotonic()
     for url in tqdm(urls, desc="urls"):
-        vulnerable, save_times, inject_times = url_vulnerability(url, number, key, value, sleep)
+        vulnerable, save_times, inject_times = url_vulnerability(url, number, key, value, sleep, min_p_value)
 
         # save times
         test_results[f"[SAFE]{url}[vulnerable=={vulnerable}]"] = save_times

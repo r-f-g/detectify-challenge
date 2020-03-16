@@ -3,6 +3,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 import requests
+from requests import ConnectionError
 from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
@@ -10,13 +11,12 @@ logger = logging.getLogger(__name__)
 
 def get_request_time(url: str, params: Optional[Dict[str, Any]] = None) -> Optional[float]:
     """timeit GET request"""
-    start = time.monotonic()
-    response = requests.get(url, params=params)
-
-    if 200 <= response.status_code < 300:
+    try:
+        start = time.monotonic()
+        requests.get(url, params=params)
         return time.monotonic() - start
-    else:
-        logger.error(f"response return code {response.status_code} with text {response.text}")
+    except ConnectionError as error:
+        logger.exception(error)
         return None
 
 
