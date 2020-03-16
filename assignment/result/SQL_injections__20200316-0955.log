@@ -1,0 +1,13 @@
+2020-03-16 09:55:04.918: INFO  @__main__       [27]: SQL injection vulnerability test [10x] for urls ('http://127.0.0.1:5000/safe/1/', 'http://127.0.0.1:5000/vulnerable/1/').
+2020-03-16 09:55:04.921: INFO  @utils.requests [26]: start test of url http://127.0.0.1:5000/safe/1/ with params {'id': '1'}
+2020-03-16 09:55:43.603: INFO  @utils.requests [28]: finished test of http://127.0.0.1:5000/safe/1/ at time 38.681
+2020-03-16 09:55:43.603: INFO  @utils.requests [26]: start test of url http://127.0.0.1:5000/safe/1/ with params {'id': 'SLEEP(3)'}
+2020-03-16 09:56:10.312: INFO  @utils.requests [28]: finished test of http://127.0.0.1:5000/safe/1/ at time 26.709
+2020-03-16 09:56:10.314: INFO  @vulnerability.sql_injections[22]: the url http://127.0.0.1:5000/safe/1/ is vulnerable False [p_value=0.333710002582277]
+2020-03-16 09:56:10.314: INFO  @utils.requests [26]: start test of url http://127.0.0.1:5000/vulnerable/1/ with params {'id': '1'}
+2020-03-16 09:56:39.048: INFO  @utils.requests [28]: finished test of http://127.0.0.1:5000/vulnerable/1/ at time 28.733
+2020-03-16 09:56:39.048: INFO  @utils.requests [26]: start test of url http://127.0.0.1:5000/vulnerable/1/ with params {'id': 'SLEEP(3)'}
+2020-03-16 09:59:42.446: INFO  @utils.requests [28]: finished test of http://127.0.0.1:5000/vulnerable/1/ at time 183.398
+2020-03-16 09:59:42.448: INFO  @vulnerability.sql_injections[22]: the url http://127.0.0.1:5000/vulnerable/1/ is vulnerable True [p_value=3.9532444786368576e-14]
+2020-03-16 09:59:42.449: INFO  @utils.save     [25]: number of results 10
+2020-03-16 09:59:42.450: INFO  @__main__       [41]: test was finished at time 277.532

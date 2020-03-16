@@ -11,7 +11,7 @@ URL testing tool to identify urls vulnerable to blind SQL injections.
 
 ### Description of the result
 
-I decided to use the Student's T-test because it is a good statistical method to see if two fields with the same variance have different average values. To achieve one positive result in ten thousand, we must select p_value 5 * 10 ^ 5 and the number of requests at least 8 when we use 3s as SQL sleep time.
+I decided to use the Student's T-test because it is a good statistical method to see if two fields with the same variance have different average values. To achieve one positive result in ten thousand, we must select p_value 5 * 10 ^ 5 and the number of requests at least 10 when we use 3s as SQL sleep time. I expected the average response time to be 1 second, but in the real world it would be a good idea to run this test at least twice with different SQL sleep time.
 
 #### log file
 In the log file, you will find information about the URL tested, the test time, and the page vulnerability result.
